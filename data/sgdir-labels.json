@@ -1,0 +1,163 @@
+[
+    {
+        "id": "566adb33fb396fe706d2d5a9",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Bug",
+        "color": "pink",
+        "uses": 127
+    },
+    {
+        "id": "57ad88a784e677fd36e6c417",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Prochain sprint",
+        "color": "green",
+        "uses": 72
+    },
+    {
+        "id": "578f378784e677fd3697396e",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Renseignement",
+        "color": "yellow",
+        "uses": 35
+    },
+    {
+        "id": "57c6919e84e677fd3629b9b1",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Non vu en atelier fin de projet",
+        "color": "sky",
+        "uses": 30
+    },
+    {
+        "id": "56557ef4fb396fe706bac607",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Régression",
+        "color": "black",
+        "uses": 26
+    },
+    {
+        "id": "5786020684e677fd367ff975",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Sprint Goal",
+        "color": "green",
+        "uses": 25
+    },
+    {
+        "id": "578f37cb84e677fd36973a9a",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Filliale",
+        "color": "orange",
+        "uses": 20
+    },
+    {
+        "id": "57d92f8984e677fd365fffb9",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Immeuble",
+        "color": "purple",
+        "uses": 20
+    },
+    {
+        "id": "578f383c84e677fd36973c37",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Ergonomie",
+        "color": "sky",
+        "uses": 10
+    },
+    {
+        "id": "578f37d684e677fd36973acc",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Service",
+        "color": "purple",
+        "uses": 9
+    },
+    {
+        "id": "579875fa84e677fd36aef50e",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Ticket de référence",
+        "color": "purple",
+        "uses": 9
+    },
+    {
+        "id": "57c581e284e677fd3626144f",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Recherche",
+        "color": "orange",
+        "uses": 8
+    },
+    {
+        "id": "57a1af5584e677fd36c6bd03",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Agence",
+        "color": "yellow",
+        "uses": 7
+    },
+    {
+        "id": "57b5c09c84e677fd36fb9b15",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Data",
+        "color": "red",
+        "uses": 7
+    },
+    {
+        "id": "57eb7fa884e677fd3696de38",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Metteur à jour",
+        "color": "lime",
+        "uses": 7
+    },
+    {
+        "id": "57a839ad84e677fd36d5f55f",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Retour SAU",
+        "color": "yellow",
+        "uses": 6
+    },
+    {
+        "id": "57591cc884e677fd360e61bb",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Retour",
+        "color": "red",
+        "uses": 5
+    },
+    {
+        "id": "57eb7b5284e677fd3696cc1f",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Ops",
+        "color": "orange",
+        "uses": 5
+    },
+    {
+        "id": "57eb7cb584e677fd3696d1f1",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Personnes",
+        "color": "sky",
+        "uses": 4
+    },
+    {
+        "id": "576a454484e677fd36399c97",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Feedback",
+        "color": "blue",
+        "uses": 3
+    },
+    {
+        "id": "57a1afee84e677fd36c6befe",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Sécu",
+        "color": "red",
+        "uses": 3
+    },
+    {
+        "id": "57b6a52684e677fd36fe23df",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Flux TOM",
+        "color": "red",
+        "uses": 3
+    },
+    {
+        "id": "57eb7fd884e677fd3696df02",
+        "idBoard": "526a7df0e4fb2b90030021ac",
+        "name": "Aide en ligne",
+        "color": null,
+        "uses": 0
+    }
+]
