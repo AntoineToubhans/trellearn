@@ -1,10 +1,14 @@
 import numpy as np
+import re
 from sklearn.naive_bayes import MultinomialNB
+
+validPhoneNumber = re.compile(r"(\+33|0)[0-9]{9}$")
+validMongoId = re.compile(r"(^[0-9a-f]{24}$)|(^[0-9a-f]{12})$")
 
 def prefilterStr(str):
     str = str.lower()
 
-    for separator in ['\n', '/', '-', ':', '...', ',', ';', '.', '(', ')', '[', ']', '\'', '_']:
+    for separator in ['\t', '\n', '/', '-', ':', '...', ',', ';', '.', '(', ')', '[', ']', '\'', '_', '*', '=', '#']:
         str = str.replace(separator, ' ')
 
     accentPatterns = {
@@ -25,6 +29,12 @@ def mapWord(word):
     if word.startswith('http'):
         return '_url'
 
+    if validPhoneNumber.match(word):
+        return '_tel'
+
+    if validMongoId.match(word):
+        return '_mongoId'
+
     return word
 
 def filterWord(word):
@@ -33,10 +43,6 @@ def filterWord(word):
 
     if word in ['du', 'de', 'du', 'elle', 'il', 'je', 'la', 'le', 'les', 'on', 'sur', 'tu']:
         return False
-
-    for start in ['=', '*']:
-        if word.startswith(start):
-            return False
 
     return True
 
