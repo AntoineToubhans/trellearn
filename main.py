@@ -8,12 +8,12 @@ if __name__ == '__main__':
 
     jsonFileName = sys.argv[1]
 
-    json = I.parseJSON(jsonFileName)
+    cards = I.parseJSON(jsonFileName)
 
-    result = P.naiveBayesRegression(json)
+    dataCards = P.extractDataFromCards(cards)
 
     print('======================================')
-    print(result)
+    print(dataCards)
     print('======================================')
 
     exit(0)
