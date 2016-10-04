@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import src.importJSON as I
 import src.processJSON as P
