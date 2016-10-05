@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import sys
-import src.importJSON as I
-import src.processJSON as P
+import src.json_importing as I
+import src.json_preprocessing_naive as P
+import src.data_training as T
+import src.data_cross_validation as V
 
 if __name__ == '__main__':
 
@@ -11,11 +13,10 @@ if __name__ == '__main__':
     jsonFileName = sys.argv[1]
 
     cards = I.parseJSON(jsonFileName)
+    X, y = P.extractDataFromCards(cards)
 
-    dataCards = P.extractDataFromCards(cards)
+    V.validate(X, y)
 
-    print('======================================')
-    print(dataCards)
-    print('======================================')
+    #print(clf.predict(X[2:3]))
 
     exit(0)
