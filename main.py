@@ -15,10 +15,10 @@ if __name__ == '__main__':
 
     cards = I.parseJSON(jsonFileName)
 
-    E.extract(cards)
+    X, y = E.extract(cards)
 
 #    X, y = P.extractDataFromCards(cards)
-#    V.validate(X, y)
+    V.validate(X, y)
 
     #print(clf.predict(X[2:3]))
 
