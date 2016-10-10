@@ -3,7 +3,7 @@ import json, os
 def parseJSON(fileName):
     print("Parsing JSON File: %s" % fileName)
 
-    filePath = os.path.join('data', fileName)
+    filePath = os.path.join(fileName)
 
     with open(filePath, 'r') as file:
         data = json.load(file)
