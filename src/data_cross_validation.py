@@ -1,23 +1,23 @@
 import numpy as np
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+from sklearn.model_selection import cross_val_score
 
 def validate(X, y):
+    validateBernoulli(X, y)
+    validateMultinomial(X, y)
 
-    test_size = 0.4
+def validateBernoulli(X, y):
 
-    for i in range(0, 10):
+    clf = BernoulliNB()
 
-        X_train, X_test, y_train, y_test = train_test_split(
-            X,
-            y,
-            test_size=0.1,
-            random_state=i
-        )
+    scores = cross_val_score(clf, X, y, cv=10)
+    print(scores)
+    print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
-        clf = MultinomialNB()
-        clf.fit(X_train, y_train)
+def validateMultinomial(X, y):
 
-        score = clf.score(X_test, y_test)
+    clf = MultinomialNB()
 
-        print("[#%d] Score for cross-validating among %.2f of the data: %.3f" % (i, 100 * test_size, score))
+    scores = cross_val_score(clf, X, y, cv=10)
+    print(scores)
+    print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
