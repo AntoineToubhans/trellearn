@@ -2,19 +2,17 @@ from sklearn                         import preprocessing
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 import re
 
-validPhoneNumber = re.compile(r"(\+33|0)[0-9]{9}$")
-validMongoId = re.compile(r"(^[0-9a-f]{24}$)|(^[0-9a-f]{12})$")
+re_phone_number = re.compile(r"(\+33|0)[0-9]{9}$")
+re_mongo_id = re.compile(r"(^[0-9a-f]{24}$)|(^[0-9a-f]{12})$")
 
 def flattenCards(cards):
     result = []
 
     for card in cards:
-        datum = card["name"] + ' ' + card["desc"]
-        for label in card.get("idLabels", []):
-            result.append({
-                'datum': datum,
-                'label': label
-            })
+        for label in card.pop("idLabels", []):
+            cardForLabel = card.copy()
+            cardForLabel["label"] = label
+            result.append(cardForLabel)
 
     return result
 
@@ -31,34 +29,71 @@ def prepareCards(cards):
 
     data, labels = [], []
     for card in cards:
-        data.append(card["datum"])
-        labels.append(card["label"])
+        labels.append(card.pop("label"))
+        data.append(card)
 
     return data, labels
 
-def tokenize_word(word):
-    if '@' in word:
+def token_map(token):
+    if '@' in token:
         return '_email'
 
-    if word.startswith('http'):
+    if token.startswith('http'):
         return '_url'
 
-    if validPhoneNumber.match(word):
+    if re_phone_number.match(token):
         return '_tel'
 
-    if validMongoId.match(word):
+    if re_mongo_id.match(token):
         return '_mongoId'
 
-    return word
+    if token.startswith('└'):
+        return '_hierarchy'
 
+    return token
 
-def custom_tokenizer(s):
-    tokens = s.split()
+def token_filter(token):
+    if len(token) < 2:
+        return False
 
-    return map(tokenize_word, tokens)
+    if token in ['du', 'de', 'du', 'elle', 'il', 'je', 'la', 'le', 'les', 'on', 'sur', 'tu']:
+        return False
+
+    return True
+
+def custom_tokenizer(str):
+    return filter(token_filter, map(token_map, str.split(' ')))
+
+def custom_preprocessor(card):
+    str = card["name"] + ' ' + card["desc"]
+    str = str.lower()
+
+    for separator in ['`', '"', '\t', '\n', '/', '-', ':', '...', ',', ';', '.', '(', ')', '[', ']', '\'', '_', '*', '=', '#']:
+        str = str.replace(separator, ' ')
+
+    accentPatterns = {
+        'e': ['é', 'è', 'ê'],
+        'a': ['à', 'â'],
+        'c': ['ç'],
+    }
+
+    for pattern in accentPatterns:
+        for charToBeReplaced in accentPatterns[pattern]:
+            str = str.replace(charToBeReplaced, pattern)
+
+    if card["due"]:
+        str += ' _hasDueDate'
+
+    if card["badges"]["attachments"]:
+        str += ' _hasAttachment'
+
+    return str
 
 def extractData(data):
-    count_vectorizer = CountVectorizer(tokenizer=custom_tokenizer)
+    count_vectorizer = CountVectorizer(
+        preprocessor=custom_preprocessor,
+        tokenizer=custom_tokenizer
+    )
 
     X_raw = count_vectorizer.fit_transform(data)
 
