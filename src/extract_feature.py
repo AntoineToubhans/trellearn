@@ -75,6 +75,7 @@ def custom_preprocessor(card):
         'e': ['é', 'è', 'ê'],
         'a': ['à', 'â'],
         'c': ['ç'],
+        'o': ['ô'],
     }
 
     for pattern in accentPatterns:
@@ -95,11 +96,11 @@ def extractData(data):
         tokenizer=custom_tokenizer
     )
 
-    X_raw = count_vectorizer.fit_transform(data)
+    X = count_vectorizer.fit_transform(data)
 
-    X_tf = TfidfTransformer(use_idf=False).fit_transform(X_raw)
+    X = TfidfTransformer(use_idf=False).fit_transform(X)
 
-    return X_tf
+    return X
 
 def extractLabels(labels):
     label_encoder = preprocessing.LabelEncoder()

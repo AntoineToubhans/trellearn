@@ -18,7 +18,7 @@ if __name__ == '__main__':
     X, y = E.extract(cards)
 
 #    X, y = P.extractDataFromCards(cards)
-    V.validate(X, y)
+    V.search(X, y)
 
     #print(clf.predict(X[2:3]))
 
