@@ -1,35 +1,14 @@
-from sklearn.preprocessing           import LabelEncoder
+from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 import re
 
 re_phone_number = re.compile(r"(\+33|0)[0-9]{9}$")
 re_mongo_id = re.compile(r"(^[0-9a-f]{24}$)|(^[0-9a-f]{12})$")
 
-def flattenCards(cards):
-    result = []
-
-    for card in cards:
-        for label in card.pop("idLabels", []):
-            cardForLabel = card.copy()
-            cardForLabel["label"] = label
-            result.append(cardForLabel)
-
-    return result
-
-def removeThreshold(threshold, cards):
-    labelDic = {}
-    for card in cards:
-        labelDic[card["label"]] = labelDic.get(card["label"], 0) + 1
-
-    return filter(lambda x: labelDic[x["label"]] > threshold, cards)
-
 def prepareCards(cards):
-    cards = flattenCards(cards)
-    cards = removeThreshold(10, cards)
-
     data, labels = [], []
     for card in cards:
-        labels.append(card.pop("label"))
+        labels.append(card.pop("idLabels"))
         data.append(card)
 
     return data, labels
@@ -97,15 +76,14 @@ def extractData(data):
     )
 
     X = count_vectorizer.fit_transform(data)
-
     X = TfidfTransformer(use_idf=False).fit_transform(X)
 
     return X
 
 def extractLabels(labels):
-    label_encoder = LabelEncoder()
+    mlb = MultiLabelBinarizer()
 
-    return label_encoder.fit_transform(labels)
+    return mlb.fit_transform(labels)
 
 def extract(cards):
     print("Preparing %d cards" % len(cards))
@@ -113,8 +91,8 @@ def extract(cards):
     print("Extracting features from %d cards" % len(data))
 
     X = extractData(data)
-    y = extractLabels(labels)
+    Y = extractLabels(labels)
 
-    print("Extraction ok: X %s, y %s" % (X.toarray().shape, y.shape))
+    print("Extraction ok: X %s, Y %s" % (X.toarray().shape, Y.shape))
 
-    return X, y
+    return X, Y

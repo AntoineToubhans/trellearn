@@ -1,10 +1,49 @@
 import pprint
 import numpy as np
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+from sklearn.multiclass import OneVsRestClassifier, OneVsOneClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_score, GridSearchCV
 
 pp = pprint.PrettyPrinter(width=80)
+
+def ppRow(clf, X, Y, i):
+    print(80 * '-')
+    print(X[i])
+    print(80 * '-')
+    print(Y[i])
+    print(80 * '-')
+    print(clf.predict(X[i:i+1]))
+    print(clf.predict_proba(X[i:i+1]))
+    print(80 * '-')
+
+def validateML(X, Y):
+    models = [{
+        'clf': BernoulliNB(),
+        'name': 'Bernoulli',
+    }, {
+        'clf': MultinomialNB(),
+        'name': 'Multinomial',
+    }]
+
+    multilabel_classifiers = [{
+        'class': OneVsRestClassifier,
+        'name': 'OneVsRest'
+    }]
+
+    for model in models:
+        for multilabel_classifier in multilabel_classifiers:
+            print(80 * '-')
+            print("Validating %s %s" % (multilabel_classifier["name"], model["name"]))
+
+            clf = multilabel_classifier["class"](model["clf"])
+            clf.fit(X, Y)
+
+            ppRow(clf, X, Y, 46)
+            ppRow(clf, X, Y, 59)
+
+            scores = cross_val_score(clf, X, Y, cv=20)
+            print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
 def validate(X, y):
     clfs = [{
