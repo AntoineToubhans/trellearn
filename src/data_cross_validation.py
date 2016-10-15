@@ -7,22 +7,22 @@ from sklearn.model_selection import cross_val_score, GridSearchCV
 
 pp = pprint.PrettyPrinter(width=80)
 
-def ppRow(clf, X, Y, i):
-    print(80 * '-')
-    print(X[i])
-    print(80 * '-')
-    print(Y[i])
-    print(80 * '-')
-    print(clf.predict(X[i:i+1]))
-    print(clf.predict_proba(X[i:i+1]))
-    print(80 * '-')
+def custom_score(estimator, X, Y):
+    print(80 * '=')
+    print(X)
+    print(80 * '=')
+    print(Y)
+    print(80 * '=')
+    print(estimator.predict_proba(X))
+    print(80 * '=')
+    return 1
 
 def validateML(X, Y):
     models = [{
-        'clf': BernoulliNB(),
+        'clf': MultinomialNB(),
         'name': 'Bernoulli',
     }, {
-        'clf': MultinomialNB(),
+        'clf': BernoulliNB(),
         'name': 'Multinomial',
     }]
 
@@ -39,10 +39,10 @@ def validateML(X, Y):
             clf = multilabel_classifier["class"](model["clf"])
             clf.fit(X, Y)
 
-            ppRow(clf, X, Y, 46)
-            ppRow(clf, X, Y, 59)
-
-            scores = cross_val_score(clf, X, Y, cv=20)
+            scores = cross_val_score(clf, X, Y, cv=10, scoring=custom_score)
+            print(80 * '-')
+            print(scores)
+            print(80 * '-')
             print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
 def validate(X, y):
