@@ -4,18 +4,12 @@ from sklearn.naive_bayes import BernoulliNB, MultinomialNB
 from sklearn.multiclass import OneVsRestClassifier, OneVsOneClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.metrics import label_ranking_average_precision_score, make_scorer
 
 pp = pprint.PrettyPrinter(width=80)
 
 def custom_score(estimator, X, Y):
-    print(80 * '=')
-    print(X)
-    print(80 * '=')
-    print(Y)
-    print(80 * '=')
-    print(estimator.predict_proba(X))
-    print(80 * '=')
-    return 1
+    return label_ranking_average_precision_score(Y, estimator.predict_proba(X))
 
 def validateML(X, Y):
     models = [{
@@ -39,7 +33,7 @@ def validateML(X, Y):
             clf = multilabel_classifier["class"](model["clf"])
             clf.fit(X, Y)
 
-            scores = cross_val_score(clf, X, Y, cv=10, scoring=custom_score)
+            scores = cross_val_score(clf, X, Y, cv=20, scoring=custom_score)
             print(80 * '-')
             print(scores)
             print(80 * '-')
