@@ -41,7 +41,7 @@ def token_filter(token):
     return True
 
 def custom_tokenizer(str):
-    return filter(token_filter, map(token_map, str.split(' ')))
+    return [token_map(token) for token in str.split() if token_filter(token)]
 
 def custom_preprocessor(card):
     str = card["name"] + ' ' + card["desc"]
@@ -76,7 +76,7 @@ def extractData(data):
     )
 
     X = count_vectorizer.fit_transform(data)
-    X = TfidfTransformer(use_idf=False).fit_transform(X)
+#    X = TfidfTransformer(use_idf=False).fit_transform(X)
 
     return X
 
