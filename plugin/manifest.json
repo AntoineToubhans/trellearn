@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Trellearn",
+  "description": "This extension allows you to sort trello labels depending on what is in the card",
+  "version": "0.1",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "trellearn.html"
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/"
+  ]
+}
