@@ -8,8 +8,12 @@
   },
   "content_scripts": [
          {
+             "css": [
+               "trellearn.css"
+             ],
              "js": [
                  "jquery-1.7.1.min.js",
+                 "lodash.js",
                  "trellearn.js"
              ],
              "matches": [
