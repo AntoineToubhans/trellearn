@@ -78,21 +78,23 @@ def extractData(data):
     X = count_vectorizer.fit_transform(data)
 #    X = TfidfTransformer(use_idf=False).fit_transform(X)
 
-    return X
+    return count_vectorizer, X
 
 def extractLabels(labels):
     mlb = MultiLabelBinarizer()
 
-    return mlb.fit_transform(labels)
+    Y =  mlb.fit_transform(labels)
+
+    return mlb, Y
 
 def extract(cards):
     print("Preparing %d cards" % len(cards))
     data, labels = prepareCards(cards)
     print("Extracting features from %d cards" % len(data))
 
-    X = extractData(data)
-    Y = extractLabels(labels)
+    cv, X = extractData(data)
+    mlb, Y = extractLabels(labels)
 
     print("Extraction ok: X %s, Y %s" % (X.toarray().shape, Y.shape))
 
-    return X, Y
+    return X, Y, cv, mlb

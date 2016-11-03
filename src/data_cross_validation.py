@@ -1,9 +1,10 @@
 import numpy as np
 
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
-from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 
 from sklearn.multiclass import OneVsRestClassifier
 
@@ -21,6 +22,9 @@ def validateML(X, Y):
         'clf': BernoulliNB(),
         'name': 'Multinomial',
     }, {
+        'clf': LogisticRegression(),
+        'name': 'LogisticRegression',
+    }, {
         'clf': SGDClassifier(loss='log', penalty='l2', alpha=1e-3, n_iter=5, random_state=42),
         'name': 'SGDClassifier',
     }, {
@@ -32,6 +36,9 @@ def validateML(X, Y):
     }, {
         'clf': RandomForestClassifier(n_estimators=10),
         'name': 'RandomForestClassifier',
+    }, {
+        'clf': MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1),
+        'name': 'Neural Network :)',
     }]
 
     models = [{
@@ -41,13 +48,17 @@ def validateML(X, Y):
 
 
     for model in models:
-        print(80 * '-')
-        print("Validating %s" % model["name"])
-
         clf = model["clf"]
+        name = model["name"]
+
+        print(80 * '-')
+        print("Validating %s" % name)
+        print(80 * '-')
+        print(". Params: %s" % clf.get_params())
+
         clf.fit(X, Y)
 
-        scores = cross_val_score(clf, X, Y, cv=20, scoring=label_ranking_average_precision_fun)
+        scores = cross_val_score(clf, X, Y, cv=50, scoring=label_ranking_average_precision_fun)
 
         print(80 * '-')
         print(scores)

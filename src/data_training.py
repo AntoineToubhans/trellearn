@@ -1,8 +1,10 @@
 import numpy as np
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.multiclass import OneVsRestClassifier
 
-def train(X, y):
-    clf = MultinomialNB()
-    clf.fit(X, y)
+def train(X, Y):
+    print('Training !')
+    clf = OneVsRestClassifier(LogisticRegression())
+    clf.fit(X, Y)
 
     return clf

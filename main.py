@@ -5,7 +5,7 @@ import src.json_importing as I
 import src.json_preprocessing_naive as P
 import src.data_training as T
 import src.data_cross_validation as V
-import src.extract_feature as E
+#import src.extract_feature as E
 import src.extract_feature_multilabel as EML
 
 if __name__ == '__main__':
@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     cards = I.parseJSON(jsonFileName)
 
-    X, Y = EML.extract(cards)
+    X, Y, cv, mlb = EML.extract(cards)
     V.validateML(X, Y)
 
 #    X, y = P.extractDataFromCards(cards)
