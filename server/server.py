@@ -4,6 +4,24 @@ from src.extract_feature_multilabel import extract, extractData
 from src.data_training import train
 
 @hug.post()
+def learn(boardId, cards):
+    """Learn from board"""
+    print("[Learn] %d cards received from board %s !" % (len(cards), boardId))
+
+    X, Y, count_vectorizer, multi_label_binarizer = extract(cards)
+    clf = train(X, Y)
+
+    joblib.dump({
+        'clf': clf,
+        'cv': count_vectorizer,
+        'mlb': multi_label_binarizer,
+    }, 'data/%s.pkl' % boardId)
+
+    print("Ok ! ---------------> model saved in data/%s.pkl" % boardId)
+
+    return 'OK :)'
+
+@hug.post()
 def labels(boardId, card):
     """Return sorted labels"""
     print("[Labels] one card received from board %s !" % boardId)
@@ -26,24 +44,6 @@ def labels(boardId, card):
         map(format, zip(clf.predict_proba(X)[0], mlb.classes_)),
         key=lambda t: -t['p']
     )
-
-@hug.post()
-def learn(boardId, cards):
-    """Learn from board"""
-    print("[Learn] %d cards received from board %s !" % (len(cards), boardId))
-
-    X, Y, count_vectorizer, multi_label_binarizer = extract(cards)
-    clf = train(X, Y)
-
-    joblib.dump({
-        'clf': clf,
-        'cv': count_vectorizer,
-        'mlb': multi_label_binarizer,
-    }, 'data/%s.pkl' % boardId)
-
-    print("Ok ! ---------------> model saved in data/%s.pkl" % boardId)
-
-    return 'OK :)'
 
 @hug.response_middleware()
 def process_data(request, response, resource):
